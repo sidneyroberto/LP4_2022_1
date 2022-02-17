@@ -9,6 +9,10 @@ export const Card = styled.div`
   width: 60%;
   margin: 0 auto 20px auto;
   align-items: center;
+
+  @media(max-width: 600px) {
+    width: 90%;
+  }
 `
 
 export const ViewLink = styled(Link)`

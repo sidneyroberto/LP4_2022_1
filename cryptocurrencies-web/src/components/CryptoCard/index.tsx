@@ -23,7 +23,7 @@ const CryptoCard = ({ id, logo, title, price, priceChange }: Props) => {
       <Card>
         <CryptoLogo src={logo} alt={`${title} logo`} />
         <CryptoTitle>{title}</CryptoTitle>
-        <Price style={priceChange >= 0 ? priceIncreasedStyle : priceDecreasedStyle}>U$ {price}</Price>
+        <Price style={priceChange >= 0 ? priceIncreasedStyle : priceDecreasedStyle}>U$ {price.toFixed(2)}</Price>
       </Card>
     </ViewLink>
   )

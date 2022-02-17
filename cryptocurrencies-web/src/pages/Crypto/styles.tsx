@@ -11,6 +11,11 @@ export const CryptoPanel = styled.div`
   border-radius: 15px;
   width: 30%;
   margin: 20px auto;
+
+  @media(max-width: 600px) {
+    width: 90%;
+    padding: 10px;
+  }
 `
 
 export const PanelRow = styled.div`

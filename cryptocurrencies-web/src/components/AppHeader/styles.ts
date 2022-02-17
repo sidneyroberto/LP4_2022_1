@@ -7,4 +7,9 @@ export const Header = styled.div`
 export const H1 = styled.h1`
   color: white;
   font-family: 'bold';
+
+  @media(max-width: 600px){
+    text-align: center;
+    margin: 0;
+  }
 `

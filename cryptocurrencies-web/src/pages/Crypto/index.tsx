@@ -51,19 +51,19 @@ const Crypto = () => {
         </PanelRow>
         <PanelRow>
           <RowKey>USD value:</RowKey>
-          <RowValue>{crypto.usd}</RowValue>
+          <RowValue>{crypto.usd.toFixed(2)}</RowValue>
         </PanelRow>
         <PanelRow>
           <RowKey>Market Cap (USD):</RowKey>
-          <RowValue>{crypto.usdMarketCap}</RowValue>
+          <RowValue>{crypto.usdMarketCap.toFixed(2)}</RowValue>
         </PanelRow>
         <PanelRow>
           <RowKey>24h Volume (USD):</RowKey>
-          <RowValue>{crypto.usd24hVolume}</RowValue>
+          <RowValue>{crypto.usd24hVolume.toFixed(2)}</RowValue>
         </PanelRow>
         <PanelRow>
           <RowKey>24h Change (USD):</RowKey>
-          <RowValue>{crypto.usd24hChange}</RowValue>
+          <RowValue>{crypto.usd24hChange.toFixed(2)}</RowValue>
         </PanelRow>
       </CryptoPanel>
 
