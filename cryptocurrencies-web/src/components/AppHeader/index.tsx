@@ -1,11 +1,11 @@
-import { Header, H1 } from './styles'
+import { Header, Title } from './styles'
 
 const AppHeader = () => {
-  return (
-    <Header>
-      <H1>Crypto Currencies</H1>
-    </Header>
-  )
+    return (
+        <Header>
+            <Title>Crypto Currencies</Title>
+        </Header>
+    )
 }
 
 export default AppHeader

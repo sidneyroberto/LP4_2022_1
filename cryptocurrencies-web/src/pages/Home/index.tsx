@@ -1,70 +1,49 @@
 import { useEffect, useState } from 'react'
-import ReactLoading from 'react-loading'
-
 import CryptoCard from '../../components/CryptoCard'
 import Price from '../../models/Price'
 import CurrencyService from '../../services/CurrencyService'
-import { Container, Filter, LoadingArea } from './styles'
+import { Container } from './styles'
 
 const Home = () => {
-  const [prices, setPrices] = useState<Price[]>([])
-  const [pricesToBeDisplayed, setPricesToBeDisplayed] = useState<Price[]>([])
-  const [listLoaded, setListLoaded] = useState<boolean>(false)
-  const currencyService = new CurrencyService()
+    /**
+     * Utilizaremos um hook chamado useState
+     * para armazenar valores dentro do estado
+     * do componente
+     */
+    const [prices, setPrices] = useState<Price[]>([])
 
-  const loadPrices = async () => {
-    let currentPrices = await currencyService.getPrices()
-    currentPrices = [...prices, ...currentPrices]
-    setPrices(currentPrices)
-    setPricesToBeDisplayed(currentPrices)
-    setListLoaded(true)
-  }
+    const currencyService = new CurrencyService()
 
-  useEffect(() => {
-    loadPrices()
-  }, [])
-
-  const renderPrice = (item: Price) => (
-    <CryptoCard key={item.id}
-      id={item.id}
-      title={item.name}
-      logo={item.image}
-      price={item.currentPrice}
-      priceChange={item.priceChange} />
-  )
-
-  const filterPrices = (filter: string) => {
-    if (filter) {
-      const filteredPrices: Price[] = prices.filter(
-        p => p.name
-          .toLocaleLowerCase()
-          .includes(filter.toLocaleLowerCase())
-      )
-
-      setPricesToBeDisplayed(filteredPrices)
-    } else {
-      setPricesToBeDisplayed(prices)
+    const loadPrices = async () => {
+        let currentPrices = await currencyService.getPrices()
+        setPrices(currentPrices)
     }
-  }
 
-  return (
-    <Container>
-      {
-        listLoaded &&
-        <div>
-          <Filter placeholder="Type desired cryptocurrency" onChange={e => filterPrices(e.target.value)} />
-          {pricesToBeDisplayed.map(p => renderPrice(p))}
-        </div>
-      }
+    /**
+     * Utilizaremos um hook chamado useEffect para
+     * invocar o service de preços para nos trazer os
+     * preços atuais assim que o componente Home for
+     * renderizado. Isto deverá ocorrer apenas uma vez
+     * após a renderização do componente.
+     */
+    useEffect(() => {
+        loadPrices()
+    }, [])
 
-      {
-        !listLoaded &&
-        <LoadingArea>
-          <ReactLoading type='spin' color='#8c14fc' width={'100%'} />
-        </LoadingArea>
-      }
-    </Container>
-  )
+    const renderCryptoCard = (price: Price) => (
+        <CryptoCard key={price.id}
+            id={price.id}
+            title={price.name}
+            logo={price.image}
+            price={price.currentPrice}
+            priceChange={price.priceChange}/>
+    )
+
+    return (
+        <Container>
+            {prices.map(p => renderCryptoCard(p))}
+        </Container>
+    )
 }
 
 export default Home
