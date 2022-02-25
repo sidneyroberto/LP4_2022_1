@@ -3,6 +3,10 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   padding: 50px 10px;
+
+  @media (max-width: 600px) {
+    padding: 20px 10px;
+  }
 `
 
 export const CryptoPanel = styled.div`
@@ -11,6 +15,11 @@ export const CryptoPanel = styled.div`
   border-radius: 15px;
   width: 30%;
   margin: 15px auto;
+
+  @media (max-width: 600px) {
+    width: 90%;
+    padding: 10px;
+  }
 `
 
 export const PanelRow = styled.div`

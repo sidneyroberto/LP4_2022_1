@@ -8,4 +8,10 @@ export const Header = styled.div`
 export const Title = styled.h1`
   color: white;
   font-family: 'bold';
+
+  @media (max-width: 600px) {
+    text-align: center;
+    margin: 0;
+    font-size: 150%;
+  }
 `
