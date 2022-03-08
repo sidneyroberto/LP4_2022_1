@@ -1,11 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 50px 10px;
-
-  @media (max-width: 600px) {
-    padding: 20px 10px;
-  }
 `
 
 export const Filter = styled.input.attrs({ type: 'text' })`
@@ -15,13 +11,13 @@ export const Filter = styled.input.attrs({ type: 'text' })`
   height: 30px;
   border: 2px solid #ccc;
   border-radius: 10px;
-  font-family: 'regular';
-  font-size: 15px;
   text-align: center;
   padding: 0 10px;
+  font-family: 'regular';
+  font-size: 15px;
 
-  @media (max-width: 600px) {
-    width: 90%;
+  @media(max-width: 600px) {
+    width: 80%;
   }
 `
 

@@ -7,50 +7,38 @@ import CurrencyService from '../../services/CurrencyService'
 import { Container, Filter, LoadingArea } from './styles'
 
 const Home = () => {
-  /**
-   * Utilizaremos um hook chamado useState
-   * para armazenar valores dentro do estado
-   * do componente
-   */
   const [prices, setPrices] = useState<Price[]>([])
   const [pricesToBeDisplayed, setPricesToBeDisplayed] = useState<Price[]>([])
-  const [isListLoaded, setIsListLoaded] = useState<boolean>(false)
-
+  const [listLoaded, setListLoaded] = useState<boolean>(false)
   const currencyService = new CurrencyService()
 
   const loadPrices = async () => {
     let currentPrices = await currencyService.getPrices()
+    currentPrices = [...prices, ...currentPrices]
     setPrices(currentPrices)
     setPricesToBeDisplayed(currentPrices)
-    setIsListLoaded(true)
+    setListLoaded(true)
   }
 
-  /**
-   * Utilizaremos um hook chamado useEffect para
-   * invocar o service de preços para nos trazer os
-   * preços atuais assim que o componente Home for
-   * renderizado. Isto deverá ocorrer apenas uma vez
-   * após a renderização do componente.
-   */
   useEffect(() => {
     loadPrices()
   }, [])
 
-  const renderCryptoCard = (price: Price) => (
+  const renderPrice = (item: Price) => (
     <CryptoCard
-      key={price.id}
-      id={price.id}
-      title={price.name}
-      logo={price.image}
-      price={price.currentPrice}
-      priceChange={price.priceChange}
+      key={item.id}
+      id={item.id}
+      title={item.name}
+      logo={item.image}
+      price={item.currentPrice}
+      priceChange={item.priceChange}
     />
   )
 
   const filterPrices = (filter: string) => {
     if (filter) {
-      const filteredPrices = prices.filter((p) =>
-        p.name.toLowerCase().includes(filter.toLowerCase())
+      const filteredPrices: Price[] = prices.filter((p) =>
+        p.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
       )
 
       setPricesToBeDisplayed(filteredPrices)
@@ -61,19 +49,20 @@ const Home = () => {
 
   return (
     <Container>
-      {isListLoaded && (
+      {listLoaded && (
         <div>
           <Filter
-            placeholder="Type desired cryptocurrency"
-            onKeyUp={(e) => filterPrices(e.currentTarget.value)}
+            data-testid='filter-input'
+            placeholder='Type desired cryptocurrency'
+            onChange={(e) => filterPrices(e.target.value)}
           />
-          {pricesToBeDisplayed.map((p) => renderCryptoCard(p))}
+          {pricesToBeDisplayed.map((p) => renderPrice(p))}
         </div>
       )}
 
-      {!isListLoaded && (
-        <LoadingArea>
-          <ReactLoading type="spin" color="#8c14fc" width={'100%'} />
+      {!listLoaded && (
+        <LoadingArea data-testid='loading-area'>
+          <ReactLoading type='spin' color='#8c14fc' width={'100%'} />
         </LoadingArea>
       )}
     </Container>

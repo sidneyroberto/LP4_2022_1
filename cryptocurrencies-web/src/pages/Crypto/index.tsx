@@ -1,74 +1,98 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import CryptoCoin from "../../models/CryptoCoin"
-import CurrencyService from "../../services/CurrencyService"
-import { BackButton, BackLink, BackLinkPanel, Container, CryptoPanel, PanelRow, RowKey, RowValue } from "./styles"
+import { useEffect, useState } from 'react'
+import ReactLoading from 'react-loading'
+import { useParams } from 'react-router-dom'
+
+import CryptoCoin from '../../models/CryptoCoin'
+import CurrencyService from '../../services/CurrencyService'
+import {
+  Container,
+  CryptoPanel,
+  PanelRow,
+  RowKey,
+  RowValue,
+  BackLinkPannel,
+  BackLink,
+  BackButton,
+  LoadingArea,
+} from './styles'
 
 type Params = {
-    id: string
-    name: string
+  cryptoId: string
+  title: string
 }
 
 const Crypto = () => {
-    /**
-     * Utilizaremos o hook useParams para
-     * resgatar os parâmetros recebidos no
-     * componente da página.
-     */
-    const {id, name} = useParams<Params>()
-    const [cryptoCoin, setCryptoCoin] = useState<CryptoCoin>({
-        id: '',
-        name: '',
-        usd24hChange: 0,
-        usd24hVolume: 0,
-        usdMarketCap: 0,
-        usdPrice: 0,
-    })
-    const currencyService = new CurrencyService()
+  const { cryptoId, title } = useParams<Params>()
+  const [crypto, setCrypto] = useState<CryptoCoin>({
+    id: '',
+    title: '',
+    usd: 0,
+    usdMarketCap: 0,
+    usd24hVolume: 0,
+    usd24hChange: 0,
+  })
+  const [isCryptoInfoLoaded, setIsCryptoInfoLoaded] = useState<boolean>(false)
 
-    const loadCryptoCoin = async () => {
-        if(id && name) {
-            const crypto = await currencyService.getCoin(id, name)
-            setCryptoCoin(crypto)
-        }
+  const currencyService = new CurrencyService()
+
+  const loadCryptoPrice = async () => {
+    if (cryptoId && title) {
+      const crypto = await currencyService.getCrypto(cryptoId, title)
+      setCrypto(crypto)
+      setIsCryptoInfoLoaded(true)
     }
+  }
 
-    useEffect(() => {
-        loadCryptoCoin()
-    }, [])
+  useEffect(() => {
+    loadCryptoPrice()
+  }, [])
 
-    return (
-       <Container>
-           <CryptoPanel>
-               <PanelRow>
-                   <RowKey>Coin:</RowKey>
-                   <RowValue>{cryptoCoin.name}</RowValue>
-               </PanelRow>
-               <PanelRow>
-                   <RowKey>USD value:</RowKey>
-                   <RowValue>{cryptoCoin.usdPrice.toFixed(2)}</RowValue>
-               </PanelRow>
-               <PanelRow>
-                   <RowKey>Market Cap (USD):</RowKey>
-                   <RowValue>{cryptoCoin.usdMarketCap.toFixed(2)}</RowValue>
-               </PanelRow>
-               <PanelRow>
-                   <RowKey>24 Volume (USD):</RowKey>
-                   <RowValue>{cryptoCoin.usd24hVolume.toFixed(2)}</RowValue>
-               </PanelRow>
-               <PanelRow>
-                   <RowKey>24h Change (USD):</RowKey>
-                   <RowValue>{cryptoCoin.usd24hChange.toFixed(2)}%</RowValue>
-               </PanelRow>
-           </CryptoPanel>
+  return (
+    <Container>
+      {isCryptoInfoLoaded && (
+        <CryptoPanel data-testid='crypto-panel'>
+          <PanelRow>
+            <RowKey>Coin:</RowKey>
+            <RowValue data-testid='title'>{crypto.title}</RowValue>
+          </PanelRow>
+          <PanelRow>
+            <RowKey>USD value:</RowKey>
+            <RowValue data-testid='usd'>{crypto.usd.toFixed(2)}</RowValue>
+          </PanelRow>
+          <PanelRow>
+            <RowKey>Market Cap (USD):</RowKey>
+            <RowValue data-testid='market-cap'>
+              {crypto.usdMarketCap.toFixed(2)}
+            </RowValue>
+          </PanelRow>
+          <PanelRow>
+            <RowKey>24h Volume (USD):</RowKey>
+            <RowValue data-testid='usd-24h-volume'>
+              {crypto.usd24hVolume.toFixed(2)}
+            </RowValue>
+          </PanelRow>
+          <PanelRow>
+            <RowKey>24h Change (USD):</RowKey>
+            <RowValue data-testid='usd-24h-change'>
+              {crypto.usd24hChange.toFixed(2)}%
+            </RowValue>
+          </PanelRow>
+        </CryptoPanel>
+      )}
 
-           <BackLinkPanel>
-               <BackLink to='/'>
-                    <BackButton>Back to currencies</BackButton>
-               </BackLink>
-           </BackLinkPanel>
-       </Container>
-    )
+      {!isCryptoInfoLoaded && (
+        <LoadingArea data-testid='loading-area'>
+          <ReactLoading type='spin' color='#8c14fc' width={'100%'} />
+        </LoadingArea>
+      )}
+
+      <BackLinkPannel>
+        <BackLink to='/'>
+          <BackButton>Back to currencies</BackButton>
+        </BackLink>
+      </BackLinkPannel>
+    </Container>
+  )
 }
 
 export default Crypto
