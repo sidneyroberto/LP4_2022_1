@@ -10,7 +10,7 @@ import {
   PanelRow,
   RowKey,
   RowValue,
-  BackLinkPannel,
+  BackLinkPanel,
   BackLink,
   BackButton,
   LoadingArea,
@@ -86,11 +86,11 @@ const Crypto = () => {
         </LoadingArea>
       )}
 
-      <BackLinkPannel>
+      <BackLinkPanel>
         <BackLink to='/'>
           <BackButton>Back to currencies</BackButton>
         </BackLink>
-      </BackLinkPannel>
+      </BackLinkPanel>
     </Container>
   )
 }

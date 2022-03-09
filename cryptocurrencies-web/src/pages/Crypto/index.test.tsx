@@ -27,7 +27,6 @@ describe('<Crypto />', () => {
     await findByTestId('crypto-panel')
 
     const text = await findByTestId('title')
-    console.log(text.textContent)
     expect(true).toBe(true)
   })
 })
