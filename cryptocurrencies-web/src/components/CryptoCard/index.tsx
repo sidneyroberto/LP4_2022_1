@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { VsCurrencyContext } from '../../context/VsCurrencyContext'
 import { Card, CryptoLogo, CryptoTitle, Price, ViewLink } from './styles'
 
 type Props = {
@@ -17,16 +19,23 @@ const priceDecreasedStyle = {
 }
 
 const CryptoCard = ({ id, logo, title, price, priceChange }: Props) => {
+  const priceStyle =
+    priceChange >= 0 ? priceIncreasedStyle : priceDecreasedStyle
+
+  const { vsCurrency } = useContext(VsCurrencyContext)
+
+  const moneyFormatter = Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: vsCurrency,
+  })
+
   return (
     <ViewLink to={`/crypto/${id}/${title}`}>
-      <Card data-testid='cryptologo'>
-        <CryptoLogo data-testid='logo' src={logo} alt={`${title} logo`} />
+      <Card key={id} data-testid='cryptocard'>
+        <CryptoLogo src={logo} alt={`${title} logo`} data-testid='logo' />
         <CryptoTitle data-testid='title'>{title}</CryptoTitle>
-        <Price
-          data-testid='price'
-          style={priceChange >= 0 ? priceIncreasedStyle : priceDecreasedStyle}
-        >
-          U$ {price.toFixed(2)}
+        <Price style={priceStyle} data-testid='price'>
+          {moneyFormatter.format(price)}
         </Price>
       </Card>
     </ViewLink>

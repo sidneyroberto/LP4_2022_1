@@ -12,7 +12,7 @@ describe('<Home />', () => {
   })
 
   it('should render correct CryptoCards when filter is applied', async () => {
-    const { findByTestId, getByTestId, findAllByTestId } = render(
+    const { getByTestId, findByTestId, findAllByTestId } = render(
       <BrowserRouter>
         <Home />
       </BrowserRouter>
@@ -25,9 +25,9 @@ describe('<Home />', () => {
       target: { value: filterText },
     })
 
-    const cryptoLogos = await findAllByTestId('cryptologo')
+    const cryptoCards = await findAllByTestId('cryptocard')
 
-    cryptoLogos.forEach((element) => {
+    cryptoCards.forEach((element) => {
       const titleSpan = element.querySelector('span:first-of-type')
       expect(titleSpan?.textContent?.toLowerCase().includes(filterText)).toBe(
         true
@@ -36,7 +36,7 @@ describe('<Home />', () => {
   })
 
   it('should render all CryptoCards when filter is blank', async () => {
-    const { findAllByTestId, findByTestId, getByTestId } = render(
+    const { getByTestId, findByTestId, findAllByTestId } = render(
       <BrowserRouter>
         <Home />
       </BrowserRouter>
@@ -44,19 +44,18 @@ describe('<Home />', () => {
 
     await findByTestId('filter-input')
 
-    const previousNumberOfCards = (await findAllByTestId('cryptologo')).length
+    const previousNumberOfCards = (await findAllByTestId('cryptocard')).length
 
-    let filterText = 'bitcoin'
+    const filterText = 'ether'
     fireEvent.change(getByTestId('filter-input'), {
       target: { value: filterText },
     })
 
-    filterText = ''
     fireEvent.change(getByTestId('filter-input'), {
-      target: { value: filterText },
+      target: { value: '' },
     })
 
-    const currentNumberOfCards = (await findAllByTestId('cryptologo')).length
+    const currentNumberOfCards = (await findAllByTestId('cryptocard')).length
     expect(previousNumberOfCards == currentNumberOfCards).toBe(true)
   })
 
@@ -74,6 +73,8 @@ describe('<Home />', () => {
       target: { value: filterText },
     })
 
-    expect(queryByTestId('cryptologo')).toBeNull()
+    await new Promise((res) => setTimeout(res, 2000))
+
+    expect(queryByTestId('cryptocard')).toBeNull()
   })
 })

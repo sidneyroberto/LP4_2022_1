@@ -1,7 +1,7 @@
 type Price = {
   id: string
-  name: string,
-  image: string,
+  name: string
+  image: string
   currentPrice: number
   priceChange: number
 }

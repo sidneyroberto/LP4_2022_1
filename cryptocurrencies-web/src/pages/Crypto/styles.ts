@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 export const Container = styled.div`
   padding: 50px 10px;
@@ -27,12 +27,12 @@ export const PanelRow = styled.div`
 `
 
 export const RowKey = styled.span`
-  font-family: "bold";
+  font-family: 'bold';
   margin-right: 10px;
 `
 
 export const RowValue = styled.span`
-  font-family: "regular";
+  font-family: 'regular';
 `
 
 export const BackLinkPanel = styled.div`
@@ -51,7 +51,7 @@ export const BackButton = styled.button`
   border-radius: 5px;
   padding: 10px 20px;
   width: 100%;
-  font-family: "bold";
+  font-family: 'bold';
   font-size: 100%;
   cursor: pointer;
 `

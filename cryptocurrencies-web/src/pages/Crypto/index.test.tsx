@@ -1,32 +1,30 @@
 import '@testing-library/jest-dom'
 import { render } from '@testing-library/react'
-import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import Crypto from '.'
 
 describe('<Crypto />', () => {
-  it('should render loading animation if no params are passed', () => {
-    const { getByTestId } = render(
-      <BrowserRouter>
-        <Crypto />
-      </BrowserRouter>
-    )
-
+  it('should render loading gif when page is loaded', () => {
+    const { getByTestId } = render(<Crypto />)
     expect(getByTestId('loading-area')).toBeInTheDocument()
   })
 
   it('should render correct values when params are passed', async () => {
-    const { findByTestId } = render(
-      <MemoryRouter initialEntries={['/crypto/bitcoin/Bitcoin']}>
+    const { findByTestId, getByTestId } = render(
+      <MemoryRouter initialEntries={['/crypto/kucoin-shares/KuCoin Token']}>
         <Routes>
-          <Route path='/crypto/:cryptoId/:title' element={<Crypto />} />
+          <Route path='/crypto/:id/:name' element={<Crypto />} />
         </Routes>
       </MemoryRouter>
     )
 
-    await findByTestId('crypto-panel')
+    await findByTestId('panel')
 
-    const text = await findByTestId('title')
-    expect(true).toBe(true)
+    expect(getByTestId('name').textContent).toBe('KuCoin Token')
+    expect(getByTestId('usd-value').textContent).toMatch(/^\d+\.\d{2}/)
+    expect(getByTestId('market-cap').textContent).toMatch(/^\d+\.\d{2}/)
+    expect(getByTestId('24h-volume').textContent).toMatch(/^\d+\.\d{2}/)
+    expect(getByTestId('24h-change').textContent).toMatch(/^\d+\.\d{2}/)
   })
 })
