@@ -1,14 +1,16 @@
-import { ReactNode } from 'react'
+import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
+import { UserContext } from '../../context/UserContext'
 
 type Props = {
-  token: string
   children: JSX.Element
 }
 
-const ProtectedRoute = ({ token, children }: Props): JSX.Element => {
+const ProtectedRoute = ({ children }: Props): JSX.Element => {
+  const { token } = useContext(UserContext)
+
   if (!token) {
-    return <Navigate to='/login' replace />
+    return <Navigate to="/login" replace />
   }
 
   return children

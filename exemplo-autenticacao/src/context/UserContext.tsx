@@ -2,16 +2,12 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 
 type UserType = {
   token: string
-  userName: string
   setToken: (newState: string) => void
-  setUserName: (newState: string) => void
 }
 
 const initialValue: UserType = {
   token: localStorage.getItem('token') || '',
-  userName: localStorage.getItem('userName') || '',
   setToken: () => {},
-  setUserName: () => {},
 }
 
 export const UserContext = createContext(initialValue)
@@ -22,15 +18,14 @@ type UserContextProps = {
 
 export const UserContextProvider = ({ children }: UserContextProps) => {
   const [token, setToken] = useState(initialValue.token)
-  const [userName, setUserName] = useState(initialValue.userName)
 
   useEffect(() => {
+    console.log('Entrou')
     localStorage.setItem('token', token)
-    localStorage.setItem('userName', userName)
-  }, [token, userName])
+  }, [token])
 
   return (
-    <UserContext.Provider value={{ token, setToken, userName, setUserName }}>
+    <UserContext.Provider value={{ token, setToken }}>
       {children}
     </UserContext.Provider>
   )

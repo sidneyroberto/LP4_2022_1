@@ -1,5 +1,16 @@
+import { useContext } from 'react'
+import { Navigate } from 'react-router-dom'
+import LoginForm from '../../components/LoginForm'
+import { UserContext } from '../../context/UserContext'
+
 const Login = () => {
-  return <h1>Login</h1>
+  const { token } = useContext(UserContext)
+
+  if (token) {
+    return <Navigate to="/home" />
+  }
+
+  return <LoginForm />
 }
 
 export default Login
