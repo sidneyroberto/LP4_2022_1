@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDhMzrq4lx3_shxYThQqL_Q_jaS8flQg3k',
-  authDomain: 'exemplo-autenticacao-b678a.firebaseapp.com',
-  projectId: 'exemplo-autenticacao-b678a',
-  storageBucket: 'exemplo-autenticacao-b678a.appspot.com',
-  messagingSenderId: '919085554699',
-  appId: '1:919085554699:web:7e0120c26caa6d4e9efb0e',
+  apiKey: 'AIzaSyD7a8b5CVUJtT29-oF4KYFsguz4DfPythc',
+  authDomain: 'exemplo-autenticacao-react.firebaseapp.com',
+  projectId: 'exemplo-autenticacao-react',
+  storageBucket: 'exemplo-autenticacao-react.appspot.com',
+  messagingSenderId: '414684093833',
+  appId: '1:414684093833:web:776ff52338427584c9d558',
 }
 
 const firebaseApp = initializeApp(firebaseConfig)

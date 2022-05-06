@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import firebaseApp from '../../config/firebase'
 import { UserContext } from '../../context/UserContext'
+import { Container, SignOutButton, WelcomeMessage } from './styles'
 
 const Home = () => {
   const { setToken } = useContext(UserContext)
@@ -17,10 +18,10 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={() => doLogout()}>Sair</button>
-    </div>
+    <Container>
+      <WelcomeMessage>Olá! Seja bem vindo!</WelcomeMessage>
+      <SignOutButton onClick={() => doLogout()}>Sair</SignOutButton>
+    </Container>
   )
 }
 

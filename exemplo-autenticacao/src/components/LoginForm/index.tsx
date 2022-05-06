@@ -5,6 +5,14 @@ import { useNavigate } from 'react-router-dom'
 
 import firebaseApp from '../../config/firebase'
 import { UserContext } from '../../context/UserContext'
+import {
+  Container,
+  ErrorMessage,
+  Form,
+  Input,
+  InfoMessage,
+  SignInButton,
+} from './styles'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -35,29 +43,32 @@ const LoginForm = () => {
   }
 
   return (
-    <div>
-      <form id="login-form" onSubmit={(event) => doLogin(event)}>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="E-mail"
+    <Container>
+      <Form onSubmit={(event) => doLogin(event)}>
+        <Input
+          type='email'
+          name='email'
+          id='email'
+          placeholder='E-mail'
+          required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
-          type="password"
-          name="password"
-          id="password"
+        <Input
+          type='password'
+          name='password'
+          id='password'
+          placeholder='Senha'
+          required
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button>Entrar</button>
-      </form>
+        <SignInButton>Entrar</SignInButton>
+      </Form>
 
-      {loading && <p>Autenticando</p>}
+      {loading && <InfoMessage>Autenticando...</InfoMessage>}
 
-      {error && <p>Credenciais inválidas: {error.message}</p>}
-    </div>
+      {error && <ErrorMessage>Credenciais inválidas</ErrorMessage>}
+    </Container>
   )
 }
 
