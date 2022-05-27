@@ -1,5 +1,5 @@
-import { Button, GoogleLogo, SignInText } from './styles'
 import google from '../../assets/img/google.png'
+import { Button, GoogleLogo, SignInText } from './styles'
 
 type Props = {
   onClick: () => void

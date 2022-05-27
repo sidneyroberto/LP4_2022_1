@@ -1,13 +1,12 @@
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
 
-import LoginButton from '../../components/LoginButton'
-import { Container } from './styles'
-import firebaseApp from '../../config/firebase'
-import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../context/UserContext'
-import { ErrorMessage, InfoMessage } from '../../globalStyles'
-import { useNavigate } from 'react-router-dom'
+import firebaseApp from '../../config/firebase'
+import { Container, ErrorMessage, InfoMessage } from './styles'
+import LoginButton from '../../components/LoginButton'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -32,6 +31,7 @@ const Login = () => {
     const token = credential?.accessToken
     const { user } = userCredentials
     const userName = user.displayName
+
     if (token) {
       setToken(token)
       setUserName(userName || '')
